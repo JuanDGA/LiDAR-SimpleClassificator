@@ -1,7 +1,9 @@
 [project]
 name = "lidar-ml"
 version = "0.1.0"
-description = "Add your description here"
+author = "Juan David Guevara Arévalo"
+license = "Apache-2.0"
+description = "This project exposes a simple approach to train and save a classificator model for LiDAR's point-cloud encodings."
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
