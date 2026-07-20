@@ -110,18 +110,17 @@ def train(
 ):
     save_path.mkdir(parents=True, exist_ok=True)
 
+    if class_names is None:
+        class_names = getattr(train_dataloader.dataset, "available_labels", {})
+
     for t in range(epochs):
         logger.info(f"Epoch {t + 1}\n-------------------------------")
         model = model.to(device)
         _train(train_dataloader, model, loss_fn, optimizer, device)
         _test(test_dataloader, model, loss_fn, device)
 
+        model_save_path = save_path / f"weights_epoch_{t + 1}.pt"
+        logger.info(f"Saving model at {model_save_path.absolute()}")
+        save_model(model, class_names, model_save_path)
+
     logger.info("Training finished...")
-
-    model_save_path = save_path / "weights.pt"
-
-    logger.info(f"Saving model at {model_save_path.absolute()}")
-
-    if class_names is None:
-        class_names = getattr(train_dataloader.dataset, "available_labels", {})
-    save_model(model, class_names, model_save_path)
